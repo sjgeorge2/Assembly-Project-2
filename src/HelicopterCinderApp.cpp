@@ -40,21 +40,6 @@ class HelicopterCinderApp : public AppNative {
 };
 
 
-//Function to draw the pipes (obstacles) 
-void drawpipe()
-{
-	//upper left, lower right corner 
-	
-	int left_x = Rand::randFloat(0,640);
-	int left_y = 0.0f;//Pipe starts at the bottom
-	int right_x=left_x+10.0f; // 10 pixels wide 
-	int right_y=left_y+Rand::randFloat(10,-390);// height between 10pixels to half screen 
-	Rectf pipe(left_x,left_y,right_x,right_y);
-	gl::drawSolidRect(pipe); 
-}
-
-	
-	
 	//Default Screen is 640x780
 void HelicopterCinderApp::setup()
 {
@@ -70,11 +55,15 @@ void HelicopterCinderApp::mouseDown( MouseEvent event )
 
 void HelicopterCinderApp::update()
 {
+	obstacle.update();
 }
 
 void HelicopterCinderApp::draw()
 {
-	obstacle.draw();
+	if(obstacle.getcount()%30 ==0) // Draws a new rectangle every second @ 30fps
+	{
+		obstacle.draw();
+	}
 }
 
 

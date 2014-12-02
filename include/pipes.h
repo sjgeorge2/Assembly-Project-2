@@ -15,15 +15,17 @@ using namespace std;
 class Pipes
 {
 	// Cooirdinates for upper left hand corner of rectangle 
-	float left_x;
-	float left_y;
+	float _leftX;
+	float _leftY;
 
 	//Coordinates for Lower Right Hand Corner of rectangle
-	float right_x;
-	float right_y;
+	float _rightX;
+	float _rightY;
+
+	 Rectf _currentPipe; // The current Pipe 
 
 	 
-	Timer previous_pipe; //TIme since last pipe 
+	 int _count; //counter since last pipe drawn
 	
 
 	
@@ -33,6 +35,8 @@ public:
 	Pipes();
 	void draw();
 	void update();
+	
+	int getcount();
 
 /* To Do: Move the Pipes at some velocity.
 		  Leave Space between pipes
