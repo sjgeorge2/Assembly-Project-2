@@ -22,10 +22,12 @@ class Pipes
 	float _rightX;
 	float _rightY;
 
-	 Rectf _currentPipe; // The current Pipe 
+	 static Rectf _currentPipe; // The current Pipe 
+	 static Rectf _previousPipe; //The previous Pipe 
 
 	 
-	 int _count; //counter since last pipe drawn
+	 static int _count; //counter since last pipe drawn
+	 
 	
 
 	
@@ -37,11 +39,14 @@ public:
 	void update();
 	
 	int getcount();
+	int incrementcount();
+	void setleftX(int);
 
 /* To Do: Move the Pipes at some velocity.
 		  Leave Space between pipes
 */
 };
+
 
 
 

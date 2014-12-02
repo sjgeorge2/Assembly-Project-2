@@ -20,8 +20,8 @@
 #include "cinder/Rand.h"
 
 //Our Header Files 
-#include "../include/pipes.h"
-
+//#include "../include/pipes.h"
+#include "../include/pipeController.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -29,7 +29,8 @@ using namespace std;
 
 class HelicopterCinderApp : public AppNative {
 
-	Pipes obstacle;
+	
+	Pipecontroller  _obstacle;
 
   public:
 	void setup();
@@ -55,15 +56,15 @@ void HelicopterCinderApp::mouseDown( MouseEvent event )
 
 void HelicopterCinderApp::update()
 {
-	obstacle.update();
+	
+	_obstacle.update();
 }
 
 void HelicopterCinderApp::draw()
 {
-	if(obstacle.getcount()%30 ==0) // Draws a new rectangle every second @ 30fps
-	{
-		obstacle.draw();
-	}
+	
+	_obstacle.draw();
+	
 }
 
 
