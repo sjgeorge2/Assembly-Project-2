@@ -25,7 +25,7 @@ public:
     float _height;
     ci::Vec2f _location;
     
-    const float WIDTH = 20.0;
+   static const int WIDTH = 20.0;
 };
 
 #endif /* defined(__Helicopter__Boundary__) */
