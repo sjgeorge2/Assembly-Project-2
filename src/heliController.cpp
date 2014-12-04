@@ -11,6 +11,7 @@ heliController::heliController()
 void heliController::draw()
 {
 	_Helicopter.set(_position.x, _position.y, _position.x + 50, _position.y + 50);
+	gl::color(0.0f,0.0f,1.0f); // Blue to difeerentiate helicopter from obstacles 
 	gl::drawSolidRect(_Helicopter);
 }
 
@@ -38,6 +39,7 @@ void heliController::updatePosition()
 	{
 		_position.y = _position.y + _velocity;
 	}
+	
 }
 
 // not sure if adding this, need to figure out how to properly replace draw() images

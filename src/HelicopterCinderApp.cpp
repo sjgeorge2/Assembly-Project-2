@@ -67,17 +67,18 @@ void HelicopterCinderApp::setup()
 void HelicopterCinderApp::mouseDown( MouseEvent event )
 {
 //  when the left mouse is clicked we change direction
-	if (event.isLeft())
-	{
-		_Helicopter.setisfalling(false);
-		_Helicopter.changeDirection(); 
-	}					
-	// check if left mouse is still down, if not, change direction 	
-	if (!event.isRight())
-	{
-		_Helicopter.setisfalling(true);
-		_Helicopter.changeDirection();
-	}
+	
+		if (event.isLeft())
+		{
+			_Helicopter.setisfalling(false);
+			_Helicopter.changeDirection(); 
+		}					
+		// check if left mouse is still down, if not, change direction 	
+		if (event.isRight())
+		{
+			_Helicopter.setisfalling(true);
+			_Helicopter.changeDirection();
+		}
 }
 
 void HelicopterCinderApp::update()
