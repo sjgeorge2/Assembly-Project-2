@@ -56,8 +56,10 @@ void HelicopterCinderApp::mouseDown( MouseEvent event )
 
 void HelicopterCinderApp::update()
 {
-	
-	_obstacle.update();
+	if(getElapsedFrames()%30 == 0)
+	{
+		_obstacle.update();
+	}
 }
 
 void HelicopterCinderApp::draw()

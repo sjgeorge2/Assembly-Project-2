@@ -2,53 +2,63 @@
 
 
 
+
+
 #include "pipeController.h"
 
 
+
 int Pipecontroller::_iterations = 0; 
-int Pipecontroller::_framesSinceLast = 0;
+
 
 Pipecontroller::Pipecontroller()
 {
+	
 }
 
 
-/* In theor, this update funtion should draw 4 equidistant triangles 
-   But currently it draws them randomly but i seem to like it better
-*/
 
 void Pipecontroller::update()
 {
-	_framesSinceLast++;
-	_draw = false;
-	if(_framesSinceLast%30 ==0)
-	{if(_iterations<4)
+		if(_iterations<4)
 		{
-		_draw = true; 
-  		_currentPipe.setleftX(160+(160*_iterations)); //One pipe every +160 pixels in the poitive x ( 4 pipes per screen) 
-		++_iterations;
-		_currentPipe.update();
+			addPipe(120+(160*_iterations));// _leftX for Pipe is 16-WIDTH*(160*_iterations)
+			++_iterations;
 		}
-	else
+		else
+		{
+			_iterations = 0; // reset iterations for every 4 iterations
+		}
+	
+
+	for(std::list<Pipes>::iterator p = _obstacles.begin(); p != _obstacles.end(); p++)
 	{
-		_iterations = 0; // reset _ieterations to 0
-		
-		//Screen clears every 2 seconds 
-		gl::clear(); // clear the screen 
+		gl::clear(); // trying to get it to delete triangles using lists but getting weird position values 
+		/* if rightX < 0, the obstacle has left the screen*/
+		if(p->getrightX() == 0.0f)
+		{
+		//	_obstacles.erase(p); // Delete the obstacle 
+		} 
+		p->update();
 	}
-	}
-
-
 
 }
 
 
 void Pipecontroller::draw()
 {
-	if(_draw)
+	
+
+	for(std::list<Pipes>::iterator p = _obstacles.begin(); p != _obstacles.end(); p++)
 	{
-		_currentPipe.draw();
+		p->draw();
 	}
+}
+
+//Add a new obstacle 
+void Pipecontroller::addPipe(float leftX)
+{
+	_obstacles.push_back(Pipes(leftX));
 }
 
 
