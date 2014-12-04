@@ -37,6 +37,7 @@ class HelicopterCinderApp : public AppNative {
 	
 
   public:
+	void prepareSettings( Settings *settings);
 	void setup();
 	void mouseDown( MouseEvent event );	
 	void update();
@@ -50,15 +51,17 @@ class HelicopterCinderApp : public AppNative {
 };
 
 
+void HelicopterCinderApp::prepareSettings(Settings *settings)
+{
+	settings->setFrameRate(60.0f);
+}
+
 	//Default Screen is 640x780
 void HelicopterCinderApp::setup()
 {
 	size = 0;
     upDown = true;
     incrementSize = 5;
-	
-
-
 }
 
 void HelicopterCinderApp::mouseDown( MouseEvent event )
@@ -67,6 +70,11 @@ void HelicopterCinderApp::mouseDown( MouseEvent event )
 
 void HelicopterCinderApp::update()
 {
+	if(getElapsedFrames()%30 == 0)
+	{
+		_obstacle.update();
+	}
+
 	if (app::getElapsedFrames()%10 == 9)
     {
         _BoundaryController.addBoundary(size);
@@ -80,10 +88,6 @@ void HelicopterCinderApp::update()
             size-= incrementSize;
     }
     _BoundaryController.update();
-	if(getElapsedFrames()%30 == 0)
-	{
-		_obstacle.update();
-	}
 }
 
 void HelicopterCinderApp::draw()
