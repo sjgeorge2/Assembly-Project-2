@@ -1,3 +1,8 @@
+#ifndef PIPECONTROLLER_H
+#define PIPECONTROLLER_H
+
+
+
 #include "pipes.h"
 #include "cinder/Timer.h" // Cinder's ibuilt timer 
 #include <list>
@@ -19,3 +24,4 @@ public:
 	void addPipe(float); 
 };
 
+#endif

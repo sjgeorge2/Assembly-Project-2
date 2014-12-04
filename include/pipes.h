@@ -1,3 +1,7 @@
+
+#ifndef PIPES_H
+#define PIPES_H
+
 #include "cinder/app/AppNative.h"
 #include "cinder/gl/gl.h"
 #include "cinder/ImageIo.h"
@@ -60,8 +64,7 @@ public:
 };
 
 
-
-
+#endif 
 
 
 
