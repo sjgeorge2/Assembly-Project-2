@@ -72,6 +72,12 @@ void HelicopterCinderApp::mouseDown( MouseEvent event )
 		_Helicopter.setisfalling(false);
 		_Helicopter.changeDirection(); 
 	}					
+	// check if left mouse is still down, if not, change direction 	
+	if (!event.isRight())
+	{
+		_Helicopter.setisfalling(true);
+		_Helicopter.changeDirection();
+	}
 }
 
 void HelicopterCinderApp::update()
@@ -97,12 +103,7 @@ void HelicopterCinderApp::update()
 		_obstacle.update();
 	}
 
-// check if left mouse is still down, if not, change direction 	
-	if (!event.isLeftDown())
-	{
-		_Helicopter.setisfalling(true);
-		_Helicopter.changeDirection();
-	}
+
 // change the position of the helicopter every other frame -- 30 times in a second //
 	if (app::getElapsedFrames()%2 == 1) 
 	_Helicopter.updatePosition();
