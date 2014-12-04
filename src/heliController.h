@@ -30,6 +30,7 @@ public:
 	int getLeftX();
 	int getTopY();
 	int getBottomY();
+	void setisfalling(bool);
 
 };
 

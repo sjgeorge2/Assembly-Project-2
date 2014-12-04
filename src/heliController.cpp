@@ -68,3 +68,8 @@ int heliController::getBottomY()
 {
 	return _position.y - 50;
 }
+
+void heliController::setisfalling(bool isfalling)
+{
+	_isFalling = isfalling;
+}
