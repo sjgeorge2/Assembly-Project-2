@@ -70,11 +70,21 @@ void HelicopterCinderApp::setup()
 
 void HelicopterCinderApp::mouseDown( MouseEvent event )
 {
-	_Helicopter.changeDirection();
+//  when the left mouse is clicked we change direction
+	if (event.isLeft())
+	{
+		_Helicopter.changeDirection(); 
+	}					
+//	mouse event has occurred, check if left mouse is still down, if not, change direction 	
+	if (!event.isLeftDown())
+	{
+		_Helicopter.changeDirection();
+	}
 }
 
 void HelicopterCinderApp::update()
 {
+// call this function every so frames to continue drawing the borders //
 	if (app::getElapsedFrames()%10 == 9)
     {
         _BoundaryController.addBoundary(size);
@@ -87,14 +97,16 @@ void HelicopterCinderApp::update()
         else
             size-= incrementSize;
     }
-    _BoundaryController.update();
+	_BoundaryController.update();
+	
+// call this function every so frames to check if it's time to create another obstacle //
 	if(getElapsedFrames()%30 == 0)
 	{
 		_obstacle.update();
 	}
 
-
-	_Helicopter.changeDirection();
+// change the position of the helicopter every other frame -- 30 times in a second //
+	if (app::getElapsedFrames()%2 == 1) 
 	_Helicopter.updatePosition();
 }
 

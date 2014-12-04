@@ -5,7 +5,7 @@ heliController::heliController()
 	_position.x = 320;
 	_position.y = 156;
 	_isFalling = true;
-	_velocity = 100; // pixels per second?
+	_velocity = 1; // pixels per second?
 }
 
 void heliController::draw()
@@ -18,24 +18,27 @@ void heliController::changeDirection()
 {
 	if (!_isFalling)
 	{
-		_velocity = -100;
+		_velocity = -1;
 		_isFalling = false;
 	}
 	else
 	{
-		_velocity = 100;
+		_velocity = 1;
+		_isFalling = true;
 	}
 }
 
+// updates the position of the helicopter with every frame //
+// currently _velocity is a placeholder variable for when we want a dynamic speed to immitate momentum //
 void heliController::updatePosition()
 {
 	if (!_isFalling)	// move up 2 pixels with every frame while mouse is pressed, 60 frames; 120px/s//
 	{
-		_position.y = _position.y + 1;
+		_position.y = _position.y + _velocity;
 	}
 	else               // move down 2 pixels with every frame while mouse is not pressed, 60 frames //
 	{
-		_position.y = _position.y - 1;
+		_position.y = _position.y + _velocity;
 	}
 }
 
