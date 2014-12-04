@@ -24,7 +24,7 @@
 #include "cinder/Rand.h"
 
 //Our Header Files 
-//#include "../include/pipes.h"
+#include "../include/pipes.h"
 #include "pipeController.h"
 #include "BoundaryController.h"
 #include "heliController.h"
@@ -100,6 +100,7 @@ void HelicopterCinderApp::update()
 
 void HelicopterCinderApp::draw()
 {
+	
 	_BoundaryController.draw();
 	_obstacle.draw();
 	_Helicopter.draw();
