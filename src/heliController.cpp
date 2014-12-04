@@ -19,7 +19,6 @@ void heliController::changeDirection()
 	if (!_isFalling)
 	{
 		_velocity = -1;
-		_isFalling = false;
 	}
 	else
 	{
@@ -47,7 +46,7 @@ int heliController::velocity(heliController & other)
 {
 	// uses old velocity with algorithm here to determine a new velocity //
 	// imitate inertia and momentum //
-	return 100;
+	return 1;
 }
 
 int heliController::getLeftX()
