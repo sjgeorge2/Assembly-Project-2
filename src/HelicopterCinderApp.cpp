@@ -9,7 +9,11 @@
 	Dr. Orion Sky Lawlor 
 */
 
-/* This is our version of the classic "Helicopter" game with some inline assembly*/
+/* 
+	This is our version of the classic "Helicopter" game with some inline assembly
+
+
+*/
 
 
 //Cinder Include Files
@@ -21,8 +25,9 @@
 
 //Our Header Files 
 //#include "../include/pipes.h"
-#include "../include/pipeController.h"
+#include "pipeController.h"
 #include "BoundaryController.h"
+#include "heliController.h"
 
 
 using namespace ci;
@@ -34,10 +39,10 @@ class HelicopterCinderApp : public AppNative {
 	
 	Pipecontroller  _obstacle;
 	BoundaryController _BoundaryController;
+	heliController _Helicopter;
 	
 
   public:
-	void prepareSettings( Settings *settings);
 	void setup();
 	void mouseDown( MouseEvent event );	
 	void update();
@@ -51,30 +56,25 @@ class HelicopterCinderApp : public AppNative {
 };
 
 
-void HelicopterCinderApp::prepareSettings(Settings *settings)
-{
-	settings->setFrameRate(60.0f);
-}
-
 	//Default Screen is 640x780
 void HelicopterCinderApp::setup()
 {
 	size = 0;
     upDown = true;
     incrementSize = 5;
+	
+	
+
+
 }
 
 void HelicopterCinderApp::mouseDown( MouseEvent event )
 {
+	_Helicopter.changeDirection();
 }
 
 void HelicopterCinderApp::update()
 {
-	if(getElapsedFrames()%30 == 0)
-	{
-		_obstacle.update();
-	}
-
 	if (app::getElapsedFrames()%10 == 9)
     {
         _BoundaryController.addBoundary(size);
@@ -88,12 +88,21 @@ void HelicopterCinderApp::update()
             size-= incrementSize;
     }
     _BoundaryController.update();
+	if(getElapsedFrames()%30 == 0)
+	{
+		_obstacle.update();
+	}
+
+
+	_Helicopter.changeDirection();
+	_Helicopter.updatePosition();
 }
 
 void HelicopterCinderApp::draw()
 {
 	_BoundaryController.draw();
 	_obstacle.draw();
+	_Helicopter.draw();
 	
 }
 
