@@ -5,7 +5,7 @@ heliController::heliController()
 	_position.x = 320;
 	_position.y = 156;
 	_isFalling = true;
-	_velocity = 1; // pixels per second?
+	_velocity = 1;
 }
 
 void heliController::draw()
@@ -23,7 +23,6 @@ void heliController::changeDirection()
 	else
 	{
 		_velocity = 1;
-		_isFalling = true;
 	}
 }
 
