@@ -2,12 +2,22 @@
 //  Boundary.cpp
 //  Helicopter
 //
-//  Created by Lonny Strunk on 12/1/14.
-//
-//
+/*
+	Arsh Chauhan, Samuel George, Lonny Strunk
+	University Of Alaska Fairbanks
+	CS-301 Fall 2014 Project 2
+	Dr. Orion Sky Lawlor
+ */
 
 #include "Boundary.h"
 
+// 2-variable Boundary constructor
+// creates a boundary of given size, with a bool to indicate if it is upper or lower boundary
+// Pre: size >= 0.0
+// Post: _lowerUpper = lowerUpper;
+//       _width = WIDTH;
+//       _height = size;
+//       _location is bottom right for lower and top right for upper boundaries
 Boundary::Boundary(float size, bool lowerUpper)
 {
     if (lowerUpper) {
@@ -25,11 +35,19 @@ Boundary::Boundary(float size, bool lowerUpper)
     }
 }
 
+// update member function
+// every frame, the location of the block moves to the left by the width/10
+// Pre: None
+// Post: _location.x -= (int)(WIDTH/10.0)
 void Boundary::update()
 {
     _location.x -= (int)(WIDTH/10.0);
 }
 
+// draw member function
+// draws a green rectangle for either upper or lower border by _location variable
+// Pre: None
+// Post: rectangle is drawn to screen for either upper or lower border
 void Boundary::draw()
 {
     if (_lowerUpper) {

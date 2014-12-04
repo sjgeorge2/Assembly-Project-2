@@ -2,9 +2,12 @@
 //  BoundaryController.h
 //  Helicopter
 //
-//  Created by Lonny Strunk on 12/1/14.
-//
-//
+/*
+	Arsh Chauhan, Samuel George, Lonny Strunk
+	University Of Alaska Fairbanks
+	CS-301 Fall 2014 Project 2
+	Dr. Orion Sky Lawlor
+ */
 
 #ifndef Helicopter_BoundaryController_h
 #define Helicopter_BoundaryController_h
@@ -12,6 +15,8 @@
 #include "Boundary.h"
 #include <list>
 
+// BoundaryController class
+// controls the upper and lower boundaries. updates and draws all boundaries, adds boundaries.
 class BoundaryController
 {
 public:

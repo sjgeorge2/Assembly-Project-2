@@ -2,9 +2,12 @@
 //  Boundary.h
 //  Helicopter
 //
-//  Created by Lonny Strunk on 12/1/14.
-//
-//
+/*
+	Arsh Chauhan, Samuel George, Lonny Strunk
+	University Of Alaska Fairbanks
+	CS-301 Fall 2014 Project 2
+	Dr. Orion Sky Lawlor
+ */
 
 #ifndef __Helicopter__Boundary__
 #define __Helicopter__Boundary__
@@ -14,6 +17,9 @@
 #include "cinder/Rect.h"
 #include "cinder/app/Window.h"
 
+// Boundary class
+// holds information for individual blocks of the border upper and lower for
+// the BoundaryController class
 class Boundary
 {
 public:
