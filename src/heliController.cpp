@@ -2,7 +2,7 @@
 
 heliController::heliController()
 {
-	_position.x = -320;
+	_position.x = 320;
 	_position.y = 156;
 	_isFalling = true;
 	_velocity = 100; // pixels per second?
@@ -31,11 +31,11 @@ void heliController::updatePosition()
 {
 	if (!_isFalling)	// move up 2 pixels with every frame while mouse is pressed, 60 frames; 120px/s//
 	{
-		_position.y = _position.y + 5;
+		_position.y = _position.y + 1;
 	}
 	else               // move down 2 pixels with every frame while mouse is not pressed, 60 frames //
 	{
-		_position.y = _position.y - 5;
+		_position.y = _position.y - 1;
 	}
 }
 
