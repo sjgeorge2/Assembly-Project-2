@@ -22,6 +22,8 @@
 //Our Header Files 
 //#include "../include/pipes.h"
 #include "../include/pipeController.h"
+#include "BoundaryController.h"
+
 
 using namespace ci;
 using namespace ci::app;
@@ -31,6 +33,8 @@ class HelicopterCinderApp : public AppNative {
 
 	
 	Pipecontroller  _obstacle;
+	BoundaryController _BoundaryController;
+	
 
   public:
 	void setup();
@@ -38,13 +42,20 @@ class HelicopterCinderApp : public AppNative {
 	void update();
 	void draw();
 	void drawpipe();
+	int size;
+    bool upDown;
+    int incrementSize;
+	
+    
 };
 
 
 	//Default Screen is 640x780
 void HelicopterCinderApp::setup()
 {
-	
+	size = 0;
+    upDown = true;
+    incrementSize = 5;
 	
 
 
@@ -56,6 +67,19 @@ void HelicopterCinderApp::mouseDown( MouseEvent event )
 
 void HelicopterCinderApp::update()
 {
+	if (app::getElapsedFrames()%10 == 9)
+    {
+        _BoundaryController.addBoundary(size);
+        if (size == incrementSize * 15)
+            upDown = false;
+        if (size == 0)
+            upDown = true;
+        if(upDown)
+            size+= incrementSize;
+        else
+            size-= incrementSize;
+    }
+    _BoundaryController.update();
 	if(getElapsedFrames()%30 == 0)
 	{
 		_obstacle.update();
@@ -64,7 +88,7 @@ void HelicopterCinderApp::update()
 
 void HelicopterCinderApp::draw()
 {
-	
+	_BoundaryController.draw();
 	_obstacle.draw();
 	
 }

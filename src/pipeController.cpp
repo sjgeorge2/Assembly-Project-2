@@ -1,4 +1,4 @@
-/* This implementation will clear the screen every 4 seconds and will require other objects to redraw themselves that often*/
+/* This implementation will clear the screen every 30 frames and will require other objects to redraw themselves that often*/
 
 
 
