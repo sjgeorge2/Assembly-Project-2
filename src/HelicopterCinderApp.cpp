@@ -28,7 +28,7 @@
 #include "pipeController.h"
 #include "BoundaryController.h"
 #include "heliController.h"
-#include "scoringEngine.h"
+//#include "scoringEngine.h"
 
 
 using namespace ci;
@@ -41,7 +41,7 @@ class HelicopterCinderApp : public AppNative {
 	Pipecontroller  _obstacle;
 	BoundaryController _BoundaryController;
 	heliController _Helicopter;
-    Scoringengine _scoringEngine;
+    //Scoringengine _scoringEngine;
 
   public:
     void prepareSettings(Settings *settings);
@@ -51,6 +51,7 @@ class HelicopterCinderApp : public AppNative {
 	void update();
 	void draw();
 	void drawpipe();
+	void render();
 	int size;
     bool upDown;
     int incrementSize;
@@ -66,6 +67,7 @@ void HelicopterCinderApp::prepareSettings( Settings *settings ){
 	//Default Screen is 640x480
 void HelicopterCinderApp::setup()
 {
+	//_scoringEngine.setup();
 	size = 0;
     upDown = true;
     incrementSize = 5;
@@ -86,6 +88,11 @@ void HelicopterCinderApp::mouseUp( MouseEvent event )
 {
     _Helicopter.setisfalling(true);
     _Helicopter.changeDirection();
+}
+
+void HelicopterCinderApp::render()
+{
+	//_scoringEngine.render();
 }
 
 void HelicopterCinderApp::update()
@@ -116,7 +123,7 @@ void HelicopterCinderApp::update()
 	//if (app::getElapsedFrames()%2 == 1)
 	_Helicopter.updatePosition();
     
-    _scoringEngine.update();
+    //_scoringEngine.update();
 }
 
 void HelicopterCinderApp::draw()
@@ -125,7 +132,7 @@ void HelicopterCinderApp::draw()
 	_BoundaryController.draw();
 	_obstacle.draw();
 	_Helicopter.draw();
-    _scoringEngine.draw();
+    //_scoringEngine.draw();
 }
 
 
