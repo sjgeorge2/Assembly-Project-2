@@ -22,14 +22,14 @@ float Pipes::_HEIGHT =100; // Set fixed Height for the obstacles
 Pipes::Pipes(float leftX)
 {
 	_position.x = leftX; // top left x-coordinate is passed by pipeController's addPipe
-	_position.y = Rand::randFloat(0.0f,780.0f); 
+	_position.y = Rand::randFloat(0.0f,480.0f);
 }
 
 
 // This should move the pipes at some velocity 
 void Pipes::update()
 {
-	_position.x = _position.x-_WIDTH; // Move rectangle by _WIDTH 
+	_position.x-= 2; // Move rectangle by _WIDTH
 }
 
 //Draw the Pipe 

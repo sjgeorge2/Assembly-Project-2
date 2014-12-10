@@ -28,7 +28,7 @@ void BoundaryController::update()
     {
         if(p->_location.x <= -(p->WIDTH))
         {
-           // _lowerBoundary.erase(p); //std::out_of_bounds on windows 
+           p = _lowerBoundary.erase(p); //std::out_of_bounds on windows
         }
         p->update();
     }
@@ -37,7 +37,7 @@ void BoundaryController::update()
     {
         if(q->_location.x <= -(q->WIDTH))
         {
-           //_upperBoundary.erase(q); //std::out_of_bounds on windows  
+           q = _upperBoundary.erase(q); //std::out_of_bounds on windows
         }
         q->update();
     }

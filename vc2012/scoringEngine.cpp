@@ -7,8 +7,8 @@ int Scoringengine::_score = 0;
 Scoringengine::Scoringengine()
 {
 	_timeSinceStart.start();
-	_scoreFont = Font(" Times New Roman", 12);
-	_width = 50;
+	_scoreFont = Font("Times New Roman", 12);
+	_width = 100;
 	_height = 20;
 	
 	_scoreBox.size(_width,_height);
@@ -17,12 +17,12 @@ Scoringengine::Scoringengine()
 
 void Scoringengine::update()
 {
-	if(int(_timeSinceStart.getSeconds())%10 == 0) // getSeconds returns a double typecast into int to compare 
+    if(int(app::getElapsedFrames())%30 == 0) // getSeconds returns a double typecast into int to compare
 	{
-		++_score;
+		_score += 1;
 	}
 	
-	std::string display = "Total Score" + toString(_score);
+	std::string display = "Total Score " + toString(_score);
 
 	_scoreBox.alignment(TextBox::RIGHT).font(_scoreFont).size(_width,_height).text(display);
 
@@ -34,6 +34,7 @@ void Scoringengine::draw()
 {
 	if(_scoreTexture)
 	{
+        gl::color(1.0, 0.0, 0.0);
 		gl::draw(_scoreTexture);
 	}
 }

@@ -19,11 +19,11 @@ void heliController::changeDirection()
 {
 	if (!_isFalling)
 	{
-		_velocity = -1;
+		_velocity = -2;
 	}
 	else
 	{
-		_velocity = 1;
+		_velocity = 2;
 	}
 }
 

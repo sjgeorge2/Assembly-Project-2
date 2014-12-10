@@ -28,6 +28,7 @@
 #include "pipeController.h"
 #include "BoundaryController.h"
 #include "heliController.h"
+#include "scoringEngine.h"
 
 
 using namespace ci;
@@ -40,11 +41,13 @@ class HelicopterCinderApp : public AppNative {
 	Pipecontroller  _obstacle;
 	BoundaryController _BoundaryController;
 	heliController _Helicopter;
-	
+    Scoringengine _scoringEngine;
 
   public:
+    void prepareSettings(Settings *settings);
 	void setup();
-	void mouseDown( MouseEvent event );	
+	void mouseDown( MouseEvent event );
+    void mouseUp( MouseEvent event );
 	void update();
 	void draw();
 	void drawpipe();
@@ -55,8 +58,12 @@ class HelicopterCinderApp : public AppNative {
     
 };
 
+void HelicopterCinderApp::prepareSettings( Settings *settings ){
+    settings->setWindowSize( 640, 480 );
+    settings->setFrameRate( 60.0f );
+}
 
-	//Default Screen is 640x780
+	//Default Screen is 640x480
 void HelicopterCinderApp::setup()
 {
 	size = 0;
@@ -67,18 +74,18 @@ void HelicopterCinderApp::setup()
 void HelicopterCinderApp::mouseDown( MouseEvent event )
 {
 //  when the left mouse is clicked we change direction
-	
-		if (event.isLeft())
-		{
-			_Helicopter.setisfalling(false);
-			_Helicopter.changeDirection(); 
-		}					
-		// check if left mouse is still down, if not, change direction 	
-		if (event.isRight())
-		{
-			_Helicopter.setisfalling(true);
-			_Helicopter.changeDirection();
-		}
+    if (event.isLeft())
+    {
+		_Helicopter.setisfalling(false);
+		_Helicopter.changeDirection();
+	}					
+		
+}
+
+void HelicopterCinderApp::mouseUp( MouseEvent event )
+{
+    _Helicopter.setisfalling(true);
+    _Helicopter.changeDirection();
 }
 
 void HelicopterCinderApp::update()
@@ -99,24 +106,26 @@ void HelicopterCinderApp::update()
 	_BoundaryController.update();
 	
 // call this function every so frames to check if it's time to create another obstacle //
-	if(getElapsedFrames()%30 == 0)
+    if(getElapsedFrames()%200 == 0)
 	{
-		_obstacle.update();
+        _obstacle.addPipe(640.0);
 	}
-
+    _obstacle.update();
 
 // change the position of the helicopter every other frame -- 30 times in a second //
-	if (app::getElapsedFrames()%2 == 1) 
+	//if (app::getElapsedFrames()%2 == 1)
 	_Helicopter.updatePosition();
+    
+    _scoringEngine.update();
 }
 
 void HelicopterCinderApp::draw()
 {
-	
+    gl::clear();
 	_BoundaryController.draw();
 	_obstacle.draw();
 	_Helicopter.draw();
-	
+    _scoringEngine.draw();
 }
 
 
