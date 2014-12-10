@@ -19,6 +19,7 @@ private:
 	ci::Vec2f _position;
 	bool _isFalling;
 	int _velocity;
+	double _timeSwitch;
 
 public:
 	heliController();
