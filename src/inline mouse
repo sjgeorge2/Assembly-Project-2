@@ -1,0 +1,46 @@
+// all this does is break stuff so it won't be in during presentation //
+// DOS based //
+
+// Get mouse button press information
+_asm
+{
+	mov ax, 5 
+	mov bx, 0	// 0 = left button, 1 = right button
+	int 33h
+	
+	and ax, 01
+	mov di, ax   		// ax contains information on the state of the mouse now
+							// |F-8|7|6|5|4|3|2|1|0
+							//					^-^-- these contain right and left button states respectively
+							//							 1 = pressed, 0 = not
+	call changeDirection   // passes a 0 (false, don't change direction), or 1 (true, change direction) 
+							// if mouse is left click
+
+}
+
+// Get mouse button release information
+_asm
+{
+	mov ax, 6		// mouse release
+	mov bx, 0		// left mouse
+	int 33h?			// mouse interrupt
+	
+	and ax, 01		// need to grab the last bit which contains left button state
+	mov di, ax 		
+	call isFalling // passes a 0 (false, mouse button has not been released, helicopter going up) 
+								// or 1 (true, mouse button has been released, helicopter is falling)
+}
+
+// Hide mouse cursor while playing! //
+_asm
+{
+	mov ax, 02
+	int 33h
+}
+
+// Show cursor, just in case //
+_asm
+{
+	mov ax, 01
+	int 33h
+}
