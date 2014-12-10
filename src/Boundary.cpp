@@ -51,14 +51,31 @@ void Boundary::update()
 void Boundary::draw()
 {
     if (_lowerUpper) {
-        ci::Rectf rect(_location.x, _location.y, _location.x+ _width, _location.y+_height);
+        ci::Rectf rect(getLeftX(), getTopY(), getRightX(), getBottomY());
         ci::gl::color(0.0, 1.0, 0.0); //green
         ci::gl::drawSolidRect(rect);
     }
     else
     {
-        ci::Rectf rect(_location.x, _location.y, _location.x+ _width, _location.y+_height);
+        ci::Rectf rect(getLeftX(), getTopY(), getRightX(), getBottomY());
         ci::gl::color(0.0, 1.0, 0.0); //green
         ci::gl::drawSolidRect(rect);
     }
+}
+
+float Boundary::getLeftX()
+{
+    return _location.x;
+}
+float Boundary::getRightX()
+{
+    return _location.x + _width;
+}
+float Boundary::getTopY()
+{
+    return _location.y;
+}
+float Boundary::getBottomY()
+{
+    return _location.y + _height;
 }

@@ -41,7 +41,12 @@ public:
 	void update();
 	
 	void setleftX(int);
-	float getrightX();
+	
+    float getLeftX();
+    float getRightX();
+    float getTopY();
+    float getBottomY();
+    
 	float getWIDTH();
 
 };

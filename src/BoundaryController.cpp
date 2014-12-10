@@ -21,26 +21,40 @@ BoundaryController::BoundaryController()
 // updates all boundaries and deletes boundaries from list that are off screen
 // Pre: None
 // Post: every boundary is updated or deleted
-void BoundaryController::update()
+bool BoundaryController::update(heliController & heli)
 {
     // for all in lowerBoundary, update
     for( std::list<Boundary>::iterator p = _lowerBoundary.begin(); p != _lowerBoundary.end(); ++p)
     {
+        if( (heli.getBottomY() > p->getTopY()) &&
+           (((heli.getLeftX() > p->getLeftX()) && (heli.getLeftX() < p->getRightX())) ||
+            ((heli.getRightX() > p->getLeftX()) && (heli.getRightX() < p->getRightX()))))
+        {
+            return true;
+        }
+
         if(p->_location.x <= -(p->WIDTH))
         {
            p = _lowerBoundary.erase(p); //std::out_of_bounds on windows
         }
         p->update();
-    }
+            }
     // for all in upperBoundary, update
     for( std::list<Boundary>::iterator q = _upperBoundary.begin(); q != _upperBoundary.end(); ++q)
     {
+        if( (heli.getTopY() < q->getBottomY()) &&
+           (((heli.getLeftX() > q->getLeftX()) && (heli.getLeftX() < q->getRightX())) ||
+            ((heli.getRightX() > q->getLeftX()) && (heli.getRightX() < q->getRightX()))))
+        {
+            return true;
+        }
         if(q->_location.x <= -(q->WIDTH))
         {
            q = _upperBoundary.erase(q); //std::out_of_bounds on windows
         }
         q->update();
     }
+    return false;
 }
 
 // draw member function

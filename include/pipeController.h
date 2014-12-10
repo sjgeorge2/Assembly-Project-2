@@ -17,6 +17,7 @@
 
 
 #include "pipes.h"
+#include "heliController.h"
 
 #include <list>
 
@@ -27,7 +28,7 @@ class Pipecontroller
  
 public:
 	Pipecontroller();
-	void update();
+	bool update(heliController & heli);
 	void draw();
 	void addPipe(float); 
 };

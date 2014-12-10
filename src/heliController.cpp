@@ -50,24 +50,24 @@ int heliController::velocity(heliController & other)
 	return 1;
 }
 
-int heliController::getLeftX()
+float heliController::getLeftX()
 {
 	return _position.x;
 }
 
-int heliController::getRightX()
+float heliController::getRightX()
 {
 	return _position.x + 50;
 }
 
-int heliController::getTopY()
+float heliController::getTopY()
 {
-	return _position.y + 50;
+	return _position.y;
 }
 
-int heliController::getBottomY()
+float heliController::getBottomY()
 {
-	return _position.y - 50;
+	return _position.y + 50;
 }
 
 void heliController::setisfalling(bool isfalling)

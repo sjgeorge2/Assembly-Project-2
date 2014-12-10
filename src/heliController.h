@@ -26,10 +26,10 @@ public:
 	void draw();
 	void changeDirection();
 	int velocity( heliController & other);
-	int getRightX();
-	int getLeftX();
-	int getTopY();
-	int getBottomY();
+	float getRightX();
+	float getLeftX();
+	float getTopY();
+	float getBottomY();
 	void setisfalling(bool);
 
 };

@@ -56,7 +56,7 @@ class HelicopterCinderApp : public AppNative {
     bool upDown;
     int incrementSize;
 	
-    
+    bool hit;
 };
 
 void HelicopterCinderApp::prepareSettings( Settings *settings ){
@@ -71,6 +71,7 @@ void HelicopterCinderApp::setup()
 	size = 0;
     upDown = true;
     incrementSize = 5;
+    hit = false;
 }
 
 void HelicopterCinderApp::mouseDown( MouseEvent event )
@@ -97,19 +98,39 @@ void HelicopterCinderApp::render()
 
 void HelicopterCinderApp::update()
 {
-// call this function every so frames to continue drawing the borders //
-	if (app::getElapsedFrames()%10 == 9)
+    if(!hit)
     {
-        _BoundaryController.addBoundary(size);
-        if (size == incrementSize * 15)
-            upDown = false;
-        if (size == 0)
-            upDown = true;
-        if(upDown)
-            size+= incrementSize;
-        else
-            size-= incrementSize;
+        // call this function every so frames to continue drawing the borders //
+        if (app::getElapsedFrames()%10 == 9)
+        {
+            _BoundaryController.addBoundary(size);
+            if (size == incrementSize * 15)
+                upDown = false;
+            if (size == 0)
+                upDown = true;
+            if(upDown)
+                size+= incrementSize;
+            else
+                size-= incrementSize;
+        }
+        hit = _BoundaryController.update(_Helicopter);
     }
+    if(!hit)
+    {
+        // call this function every so frames to check if it's time to create another obstacle //
+        if(getElapsedFrames()%200 == 0)
+        {
+            _obstacle.addPipe(640.0);
+        }
+        hit = _obstacle.update(_Helicopter);
+
+        // change the position of the helicopter every other frame -- 30 times in a second //
+        //if (app::getElapsedFrames()%2 == 1)
+        _Helicopter.updatePosition();
+        
+        _scoringEngine.update();
+    }
+<<<<<<< Updated upstream
 	_BoundaryController.update();
 	
 // call this function every so frames to check if it's time to create another obstacle //
@@ -124,6 +145,8 @@ void HelicopterCinderApp::update()
 	_Helicopter.updatePosition();
     
     //_scoringEngine.update();
+=======
+>>>>>>> Stashed changes
 }
 
 void HelicopterCinderApp::draw()

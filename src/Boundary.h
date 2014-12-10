@@ -31,6 +31,11 @@ public:
     float _height;
     ci::Vec2f _location;
     
+    float getLeftX();
+    float getRightX();
+    float getTopY();
+    float getBottomY();
+    
    static const int WIDTH = 20.0;
 };
 

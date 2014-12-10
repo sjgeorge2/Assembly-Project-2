@@ -35,15 +35,27 @@ void Pipes::update()
 //Draw the Pipe 
 void Pipes::draw()
 {
-	_currentPipe.set(_position.x,_position.y,_position.x+_WIDTH,_position.y+_HEIGHT);
+	_currentPipe.set(getLeftX(), getTopY(), getRightX(), getBottomY());
 	gl::color(0.0,1.0,0.0); // Green 
 	gl::drawSolidRect(_currentPipe); 
 }
 
 // returns the right top corner's x-coordinate
-float Pipes::getrightX()
+float Pipes::getRightX()
 {
-	return (_position.x+_WIDTH);
+	return (_position.x);
+}
+float Pipes::getLeftX()
+{
+    return (_position.x+_WIDTH);
+}
+float Pipes::getTopY()
+{
+    return (_position.y);
+}
+float Pipes::getBottomY()
+{
+    return (_position.y+_HEIGHT);
 }
 
 

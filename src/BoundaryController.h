@@ -14,6 +14,7 @@
 
 #include "Boundary.h"
 #include <list>
+#include "heliController.h"
 
 // BoundaryController class
 // controls the upper and lower boundaries. updates and draws all boundaries, adds boundaries.
@@ -21,7 +22,7 @@ class BoundaryController
 {
 public:
     BoundaryController();
-    void update();
+    bool update(heliController & heli);
     void draw();
     void addBoundary(float size);
     
