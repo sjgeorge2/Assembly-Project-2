@@ -9,6 +9,10 @@
 /* This file implements the properties of the obstacles */
 
 #include "pipes.h"
+#include <cstdlib>
+using std::rand;
+#include <ctime>
+using std::time;
 
 
 //Initialize Static members 
@@ -21,8 +25,10 @@ float Pipes::_HEIGHT =100; // Set fixed Height for the obstacles
 
 Pipes::Pipes(float leftX)
 {
+    float randNum = static_cast <float> (rand()) / (static_cast<float> (RAND_MAX/480.0f));
+    
 	_position.x = leftX; // top left x-coordinate is passed by pipeController's addPipe
-	_position.y = Rand::randFloat(0.0f,480.0f);
+    _position.y = randNum;
 }
 
 
@@ -43,11 +49,11 @@ void Pipes::draw()
 // returns the right top corner's x-coordinate
 float Pipes::getRightX()
 {
-	return (_position.x);
+	return (_position.x+_WIDTH);
 }
 float Pipes::getLeftX()
 {
-    return (_position.x+_WIDTH);
+    return (_position.x);
 }
 float Pipes::getTopY()
 {

@@ -18,8 +18,9 @@ private:
 	Rectf _Helicopter;
 	ci::Vec2f _position;
 	bool _isFalling;
-	int _velocity;
-	double _timeSwitch;
+    float _velocity;
+    float _acceleration;
+
 
 public:
 	heliController();
