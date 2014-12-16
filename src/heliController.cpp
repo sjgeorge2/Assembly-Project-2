@@ -5,7 +5,8 @@ heliController::heliController()
 	_position.x = 320;
 	_position.y = 156;
 	_isFalling = true;
-	_velocity = 1;
+    _velocity = 1.0;
+    _acceleration = 1.0;
 }
 
 void heliController::draw()
