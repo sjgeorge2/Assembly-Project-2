@@ -51,7 +51,7 @@ class HelicopterCinderApp : public AppNative {
 	void update();
 	void draw();
 	void drawpipe();
-	
+	void render();
 	int size;
     bool upDown;
     int incrementSize;
@@ -91,7 +91,6 @@ void HelicopterCinderApp::mouseUp( MouseEvent event )
 }
 
 
-
 void HelicopterCinderApp::update()
 {
     if(!hit)
@@ -114,7 +113,7 @@ void HelicopterCinderApp::update()
     if(!hit)
     {
         // call this function every so frames to check if it's time to create another obstacle //
-        if(getElapsedFrames()%200 == 0)
+        if(app::getElapsedFrames()%200 == 0)
         {
             _obstacle.addPipe(640.0);
         }
@@ -124,10 +123,8 @@ void HelicopterCinderApp::update()
         //if (app::getElapsedFrames()%2 == 1)
         _Helicopter.updatePosition();
         
-       _scoringEngine.update();
+        _scoringEngine.update();
     }
-
-	
 }
 
 void HelicopterCinderApp::draw()
