@@ -21,7 +21,7 @@ BoundaryController::BoundaryController()
 // updates all boundaries and deletes boundaries from list that are off screen
 // Pre: None
 // Post: every boundary is updated or deleted
-bool BoundaryController::update(heliController & heli, float dt)
+bool BoundaryController::update(heliController & heli, float dt, float speed)
 {
     bool hit = false;
     
@@ -42,7 +42,7 @@ bool BoundaryController::update(heliController & heli, float dt)
         }
         if ( p != _lowerBoundary.end())
         {
-            p->update(dt);
+            p->update(dt, speed);
         }
     }
     // for all in upperBoundary, update
@@ -61,12 +61,9 @@ bool BoundaryController::update(heliController & heli, float dt)
         }
         if(q != _upperBoundary.end())
         {
-            q->update(dt);
+            q->update(dt, speed);
         }
     }
-    
-    std::cout<<_upperBoundary.size()<<std::endl;
-    
     return hit;
 }
 
@@ -93,14 +90,19 @@ void BoundaryController::draw()
 // Pre: size >= 0.0
 // Post: lowerBoundary of given size is added
 //       upperBoundary of 100-size is added
-void BoundaryController::addBoundary(float size)
+void BoundaryController::addBoundary(float height, float width, int maxBoundaryHeight)
 {
-    Boundary lower(size, true);
-    Boundary upper(100-size, false);
+    Boundary lower(height, width, true);
+    Boundary upper(maxBoundaryHeight-height, width, false);
     
     lower._location.x=((int)lower._location.x)/Boundary::WIDTH*Boundary::WIDTH;
     upper._location.x=((int)upper._location.x)/Boundary::WIDTH*Boundary::WIDTH;
     
     _lowerBoundary.push_back(lower); //true for lower boundary constructor
     _upperBoundary.push_back(upper);// false for upper boundary constructor
+}
+void BoundaryController::reset()
+{
+    _lowerBoundary.clear();
+    _upperBoundary.clear();
 }

@@ -20,7 +20,7 @@ Pipecontroller::Pipecontroller()
 
 
 /* This implementation will clear the screen every 30 frames and will require other objects to redraw themselves that often*/
-bool Pipecontroller::update(heliController & heli, float dt)
+bool Pipecontroller::update(heliController & heli, float dt, float speed)
 {
     bool hit = false;
     for(std::list<Pipes>::iterator p = _obstacles.begin(); p != _obstacles.end(); p++)
@@ -56,7 +56,7 @@ bool Pipecontroller::update(heliController & heli, float dt)
 		}
         if (p != _obstacles.end())
         {
-            p->update(dt);
+            p->update(dt, speed);
         }
 	}
     return hit;
@@ -75,6 +75,11 @@ void Pipecontroller::draw()
 void Pipecontroller::addPipe(float leftX)
 {
 	_obstacles.push_back(Pipes(leftX));
+}
+
+void Pipecontroller::reset()
+{
+    _obstacles.clear();
 }
 
 

@@ -38,7 +38,7 @@ class Pipes
 public:
 	Pipes(float);
 	void draw();
-	void update(float dt);
+	void update(float dt, float speed);
 	
 	void setleftX(int);
 	

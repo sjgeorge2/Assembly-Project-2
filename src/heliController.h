@@ -33,6 +33,7 @@ public:
 	float getTopY();
 	float getBottomY();
 	void setisfalling(bool);
+    void reset();
 
 };
 

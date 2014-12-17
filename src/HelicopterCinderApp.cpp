@@ -28,7 +28,7 @@
 #include "pipeController.h"
 #include "BoundaryController.h"
 #include "heliController.h"
-#include "scoringEngine.h"
+#include "../include/scoringEngine.h"
 
 
 using namespace ci;
@@ -48,6 +48,7 @@ class HelicopterCinderApp : public AppNative {
 	void setup();
 	void mouseDown( MouseEvent event );
     void mouseUp( MouseEvent event );
+    void keyDown( KeyEvent event);
 	void update();
 	void draw();
 	void drawpipe();
@@ -60,6 +61,9 @@ class HelicopterCinderApp : public AppNative {
     bool hit;
     float someVariable;
     float startY, endY, YchangeRate;
+    int gameState;
+    float width, speed;
+    int maxBoundaryHeight;
 };
 
 void HelicopterCinderApp::prepareSettings( Settings *settings ){
@@ -70,7 +74,7 @@ void HelicopterCinderApp::prepareSettings( Settings *settings ){
 	//Default Screen is 640x480
 void HelicopterCinderApp::setup()
 {
-	size = 0;
+    size = 0;
     upDown = true;
     incrementSize = 5;
     hit = false;
@@ -79,6 +83,10 @@ void HelicopterCinderApp::setup()
     someVariable = 0;
     startY = endY = 10;
     YchangeRate = 100;
+    gameState = 0;
+    width = 20.0;
+    speed = 120.0;
+    maxBoundaryHeight = 100;
 }
 
 void HelicopterCinderApp::mouseDown( MouseEvent event )
@@ -86,10 +94,10 @@ void HelicopterCinderApp::mouseDown( MouseEvent event )
 //  when the left mouse is clicked we change direction
     if (event.isLeft())
     {
+        gameState = 1;
 		_Helicopter.setisfalling(false);
 		_Helicopter.changeDirection();
-	}					
-		
+	}
 }
 
 void HelicopterCinderApp::mouseUp( MouseEvent event )
@@ -98,57 +106,80 @@ void HelicopterCinderApp::mouseUp( MouseEvent event )
     _Helicopter.changeDirection();
 }
 
+void HelicopterCinderApp::keyDown( KeyEvent event ) {
+    if( event.getCode() == KeyEvent::KEY_RETURN)
+    {
+        gameState = 0;
+        hit = false;
+        width = 20.0;
+        speed = 120.0;
+        maxBoundaryHeight = 100;
+        _Helicopter.reset();
+        _BoundaryController.reset();
+        _obstacle.reset();
+        _scoringEngine.reset();
+    }
+}
 
 void HelicopterCinderApp::update()
 {
     float currentTime = getElapsedSeconds();
     dt = currentTime - olddt;
     olddt = currentTime;
-    someVariable += 120 *dt;
-
-    if(!hit)
-    {
-        while (someVariable >= Boundary::WIDTH)
-        {
-            _BoundaryController.addBoundary(startY);
-            
-            someVariable -= 20;
-            YchangeRate -=20;
-            if (startY <= endY - 10) {
-                startY += incrementSize;
-            }
-            else if (startY >= endY + 10)
-            {
-                startY -= incrementSize;
-            }
-        }
-        int changeInSlope=rand()%50;
-        
-        if ( YchangeRate <= 0)
-        {
-            YchangeRate = 320;
-            startY = endY;
-            do {
-            endY = rand()%100;
-            }while (abs(endY-startY)<changeInSlope);
-            
-        }
-        hit = _BoundaryController.update(_Helicopter, dt);
-    }
-    if(!hit)
-    {
-        // call this function every so frames to check if it's time to create another obstacle //
-        if(app::getElapsedFrames()%200 == 0)
-        {
-            _obstacle.addPipe(640.0);
-        }
-        hit = _obstacle.update(_Helicopter, dt);
-
-        // change the position of the helicopter every other frame -- 30 times in a second //
-        //if (app::getElapsedFrames()%2 == 1)
+    someVariable += 240 *dt;
+    
+    if (gameState == 0) {
         _Helicopter.updatePosition(dt);
+    } else if (gameState == 1)
+    {
+        if(!hit)
+        {
+            while (someVariable >= Boundary::WIDTH)
+            {
+                _BoundaryController.addBoundary(startY, width, maxBoundaryHeight);
+                
+                someVariable -= 20;
+                YchangeRate -=20;
+                if (startY <= endY - 10) {
+                    startY += incrementSize;
+                }
+                else if (startY >= endY + 10)
+                {
+                    startY -= incrementSize;
+                }
+            }
+            int changeInSlope=rand()% (maxBoundaryHeight/2);
+            
+            if ( YchangeRate <= 0)
+            {
+                YchangeRate = 320;
+                startY = endY;
+                speed += 5;
+                width += 0.5;
+                do {
+                endY = rand()% maxBoundaryHeight;
+                }while (abs(endY-startY)<changeInSlope);
+                
+            }
+            hit = _BoundaryController.update(_Helicopter, dt, speed);
+        }
+        if(!hit)
+        {
+            // call this function every so frames to check if it's time to create another obstacle //
+            if(app::getElapsedFrames()%200 == 0)
+            {
+                _obstacle.addPipe(640.0);
+                maxBoundaryHeight++;
+            }
+            hit = _obstacle.update(_Helicopter, dt, speed);
+            
+            _Helicopter.updatePosition(dt);
+            
+            _scoringEngine.update();
+        }
+    } else if (gameState == 2)
+    {
         
-        _scoringEngine.update();
     }
 }
 

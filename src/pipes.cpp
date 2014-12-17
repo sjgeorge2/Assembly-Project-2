@@ -33,9 +33,9 @@ Pipes::Pipes(float leftX)
 
 
 // This should move the pipes at some velocity 
-void Pipes::update(float dt)
+void Pipes::update(float dt, float speed)
 {
-	_position.x-= 120 * dt; // Move rectangle by _WIDTH
+	_position.x-= speed * dt; // Move rectangle by _WIDTH
 }
 
 //Draw the Pipe 

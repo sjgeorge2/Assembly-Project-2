@@ -5,8 +5,8 @@ heliController::heliController()
 	_position.x = 320;
 	_position.y = 156;
 	_isFalling = true;
-    _velocity = 120.0;
-    _acceleration = 1.0;
+    _velocity = 0.0;
+    _acceleration = 0.0;
 }
 
 void heliController::draw()
@@ -20,11 +20,11 @@ void heliController::changeDirection()
 {
 	if (!_isFalling)
 	{
-		_velocity = -120;
+		_acceleration = -700.0;
 	}
 	else
 	{
-		_velocity = 120;
+		_acceleration = 800;
 	}
 }
 
@@ -32,6 +32,7 @@ void heliController::changeDirection()
 // currently _velocity is a placeholder variable for when we want a dynamic speed to immitate momentum //
 void heliController::updatePosition(float dt)
 {
+    _velocity += _acceleration * dt;
 	if (!_isFalling)	// move up 2 pixels with every frame while mouse is pressed, 60 frames; 120px/s//
 	{
 		_position.y = _position.y + _velocity * dt;
@@ -49,6 +50,15 @@ int heliController::velocity(heliController & other)
 	// uses old velocity with algorithm here to determine a new velocity //
 	// imitate inertia and momentum //
 	return 1;
+}
+
+void heliController::reset()
+{
+    _position.x = 320;
+    _position.y = 156;
+    _isFalling = true;
+    _velocity = 0.0;
+    _acceleration = 0.0;
 }
 
 float heliController::getLeftX()

@@ -18,19 +18,19 @@
 //       _width = WIDTH;
 //       _height = size;
 //       _location is bottom right for lower and top right for upper boundaries
-Boundary::Boundary(float size, bool lowerUpper)
+Boundary::Boundary(float height,float width, bool lowerUpper)
 {
     if (lowerUpper) {
         _lowerUpper = lowerUpper;
-        _width = WIDTH;
-        _height = size;
-        _location = ci::Vec2f(640.0+WIDTH, 480.0-size);
+        _width = width;
+        _height = height;
+        _location = ci::Vec2f(640.0+WIDTH, 480.0-height);
     }
     else
     {
         _lowerUpper = lowerUpper;
-        _width = WIDTH;
-        _height = size;
+        _width = width;
+        _height = height;
         _location = ci::Vec2f(640.0+WIDTH, 0.0);
     }
 }
@@ -39,9 +39,9 @@ Boundary::Boundary(float size, bool lowerUpper)
 // every frame, the location of the block moves to the left by the width/10
 // Pre: None
 // Post: _location.x -= (int)(WIDTH/10.0)
-void Boundary::update(float dt)
+void Boundary::update(float dt, float speed)
 {
-    _location.x -= 120 * dt;
+    _location.x -= speed * dt;
 }
 
 // draw member function

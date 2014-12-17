@@ -22,10 +22,10 @@ class BoundaryController
 {
 public:
     BoundaryController();
-    bool update(heliController & heli, float dt);
+    bool update(heliController & heli, float dt, float speed);
     void draw();
-    void addBoundary(float size);
-    
+    void addBoundary(float height, float width, int maxBoundaryHeight);
+    void reset();
     std::list <Boundary> _lowerBoundary;
     std::list <Boundary> _upperBoundary;
 };

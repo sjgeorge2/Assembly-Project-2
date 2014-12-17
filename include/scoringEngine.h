@@ -17,8 +17,10 @@ class Scoringengine
 {
 	Vec2f _position; //Score display starts at this location 
 	static int _score;
+    static int _highScore;
 	std::string _display;
-	std::string _displayBinary; // Display the string in Binary 
+	std::string _displayBinary;// Display the string in Binary
+    std::string _displayHighScore;
 	
 public:
 	
@@ -26,6 +28,7 @@ public:
 	Scoringengine();
 	void update();
 	void draw();
+    void reset();
 	
 };
 

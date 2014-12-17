@@ -23,8 +23,8 @@
 class Boundary
 {
 public:
-    Boundary(float size, bool lowerUpper);
-    void update(float dt);
+    Boundary(float height, float width, bool lowerUpper);
+    void update(float dt, float speed);
     void draw();
     bool _lowerUpper;
     float _width;
