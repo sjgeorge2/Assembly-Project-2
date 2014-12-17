@@ -20,42 +20,46 @@ Pipecontroller::Pipecontroller()
 
 
 /* This implementation will clear the screen every 30 frames and will require other objects to redraw themselves that often*/
-bool Pipecontroller::update(heliController & heli)
+bool Pipecontroller::update(heliController & heli, float dt)
 {
+    bool hit = false;
     for(std::list<Pipes>::iterator p = _obstacles.begin(); p != _obstacles.end(); p++)
     {
         //top-right heli point collision
         if ( ((heli.getTopY() > p->getTopY())  && (heli.getTopY() < p->getBottomY())) &&
             ((heli.getRightX() > p->getLeftX()) && (heli.getRightX() < p->getRightX())))
         {
-            return true;
+            hit = true;
         }
         //top-left heli point collision
         else if ( ((heli.getTopY() > p->getTopY())  && (heli.getTopY() < p->getBottomY())) &&
                  ((heli.getLeftX() > p->getLeftX()) && (heli.getLeftX() < p->getRightX())))
         {
-            return true;
+            hit = true;
         }
         //bottom-right heli point collision
         else if (((heli.getBottomY() > p->getTopY())  && (heli.getBottomY() < p->getBottomY())) &&
                  ((heli.getRightX() > p->getLeftX()) && (heli.getRightX() < p->getRightX())))
         {
-            return true;
+            hit = true;
         }
         //bottom-left heli point collision
         else if (((heli.getBottomY() > p->getTopY())  && (heli.getBottomY() < p->getBottomY())) &&
                  ((heli.getLeftX() > p->getLeftX()) && (heli.getLeftX() < p->getRightX())))
         {
-            return true;
+            hit = true;
         }
         
 		if(p->getRightX() == 0.0f)
 		{
 		p = _obstacles.erase(p); // Delete the obstacle
 		}
-		p->update();
+        if (p != _obstacles.end())
+        {
+            p->update(dt);
+        }
 	}
-    return false;
+    return hit;
 }
 
 // Draw an obstacle 

@@ -5,7 +5,7 @@ heliController::heliController()
 	_position.x = 320;
 	_position.y = 156;
 	_isFalling = true;
-    _velocity = 1.0;
+    _velocity = 120.0;
     _acceleration = 1.0;
 }
 
@@ -20,25 +20,25 @@ void heliController::changeDirection()
 {
 	if (!_isFalling)
 	{
-		_velocity = -2;
+		_velocity = -120;
 	}
 	else
 	{
-		_velocity = 2;
+		_velocity = 120;
 	}
 }
 
 // updates the position of the helicopter with every frame //
 // currently _velocity is a placeholder variable for when we want a dynamic speed to immitate momentum //
-void heliController::updatePosition()
+void heliController::updatePosition(float dt)
 {
 	if (!_isFalling)	// move up 2 pixels with every frame while mouse is pressed, 60 frames; 120px/s//
 	{
-		_position.y = _position.y + _velocity;
+		_position.y = _position.y + _velocity * dt;
 	}
 	else               // move down 2 pixels with every frame while mouse is not pressed, 60 frames //
 	{
-		_position.y = _position.y + _velocity;
+		_position.y = _position.y + _velocity * dt;
 	}
 	
 }

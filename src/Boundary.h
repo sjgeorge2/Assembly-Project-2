@@ -24,7 +24,7 @@ class Boundary
 {
 public:
     Boundary(float size, bool lowerUpper);
-    void update();
+    void update(float dt);
     void draw();
     bool _lowerUpper;
     float _width;

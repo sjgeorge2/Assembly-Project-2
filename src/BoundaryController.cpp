@@ -16,13 +16,15 @@ BoundaryController::BoundaryController()
 {
     
 }
-
+#include <iostream>
 // update member function
 // updates all boundaries and deletes boundaries from list that are off screen
 // Pre: None
 // Post: every boundary is updated or deleted
-bool BoundaryController::update(heliController & heli)
+bool BoundaryController::update(heliController & heli, float dt)
 {
+    bool hit = false;
+    
     // for all in lowerBoundary, update
     for( std::list<Boundary>::iterator p = _lowerBoundary.begin(); p != _lowerBoundary.end(); ++p)
     {
@@ -30,15 +32,19 @@ bool BoundaryController::update(heliController & heli)
            (((heli.getLeftX() > p->getLeftX()) && (heli.getLeftX() < p->getRightX())) ||
             ((heli.getRightX() > p->getLeftX()) && (heli.getRightX() < p->getRightX()))))
         {
-            return true;
+            hit = true;
         }
 
         if(p->_location.x <= -(p->WIDTH))
         {
            p = _lowerBoundary.erase(p); //std::out_of_bounds on windows
+            p--;
         }
-        p->update();
-            }
+        if ( p != _lowerBoundary.end())
+        {
+            p->update(dt);
+        }
+    }
     // for all in upperBoundary, update
     for( std::list<Boundary>::iterator q = _upperBoundary.begin(); q != _upperBoundary.end(); ++q)
     {
@@ -46,15 +52,22 @@ bool BoundaryController::update(heliController & heli)
            (((heli.getLeftX() > q->getLeftX()) && (heli.getLeftX() < q->getRightX())) ||
             ((heli.getRightX() > q->getLeftX()) && (heli.getRightX() < q->getRightX()))))
         {
-            return true;
+            hit = true;
         }
         if(q->_location.x <= -(q->WIDTH))
         {
            q = _upperBoundary.erase(q); //std::out_of_bounds on windows
+            q--;
         }
-        q->update();
+        if(q != _upperBoundary.end())
+        {
+            q->update(dt);
+        }
     }
-    return false;
+    
+    std::cout<<_upperBoundary.size()<<std::endl;
+    
+    return hit;
 }
 
 // draw member function
@@ -82,6 +95,12 @@ void BoundaryController::draw()
 //       upperBoundary of 100-size is added
 void BoundaryController::addBoundary(float size)
 {
-    _lowerBoundary.push_back(Boundary(size, true)); //true for lower boundary constructor
-    _upperBoundary.push_back(Boundary(100-size, false));// false for upper boundary constructor
+    Boundary lower(size, true);
+    Boundary upper(100-size, false);
+    
+    lower._location.x=((int)lower._location.x)/Boundary::WIDTH*Boundary::WIDTH;
+    upper._location.x=((int)upper._location.x)/Boundary::WIDTH*Boundary::WIDTH;
+    
+    _lowerBoundary.push_back(lower); //true for lower boundary constructor
+    _upperBoundary.push_back(upper);// false for upper boundary constructor
 }

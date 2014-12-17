@@ -28,7 +28,7 @@ class Pipecontroller
  
 public:
 	Pipecontroller();
-	bool update(heliController & heli);
+	bool update(heliController & heli, float dt);
 	void draw();
 	void addPipe(float); 
 };

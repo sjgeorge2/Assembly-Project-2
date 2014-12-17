@@ -24,7 +24,7 @@ private:
 
 public:
 	heliController();
-	void updatePosition();
+	void updatePosition(float dt);
 	void draw();
 	void changeDirection();
 	int velocity( heliController & other);

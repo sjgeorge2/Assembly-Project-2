@@ -39,9 +39,9 @@ Boundary::Boundary(float size, bool lowerUpper)
 // every frame, the location of the block moves to the left by the width/10
 // Pre: None
 // Post: _location.x -= (int)(WIDTH/10.0)
-void Boundary::update()
+void Boundary::update(float dt)
 {
-    _location.x -= (int)(WIDTH/10.0);
+    _location.x -= 120 * dt;
 }
 
 // draw member function
@@ -51,13 +51,13 @@ void Boundary::update()
 void Boundary::draw()
 {
     if (_lowerUpper) {
-        ci::Rectf rect(getLeftX(), getTopY(), getRightX(), getBottomY());
+        ci::Rectf rect(getLeftX(), getTopY(), getRightX()+10, getBottomY());
         ci::gl::color(0.0, 1.0, 0.0); //green
         ci::gl::drawSolidRect(rect);
     }
     else
     {
-        ci::Rectf rect(getLeftX(), getTopY(), getRightX(), getBottomY());
+        ci::Rectf rect(getLeftX(), getTopY(), getRightX()+10, getBottomY());
         ci::gl::color(0.0, 1.0, 0.0); //green
         ci::gl::drawSolidRect(rect);
     }

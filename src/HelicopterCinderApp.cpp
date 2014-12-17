@@ -55,8 +55,11 @@ class HelicopterCinderApp : public AppNative {
 	int size;
     bool upDown;
     int incrementSize;
-	
+    float dt;
+    float olddt;
     bool hit;
+    float someVariable;
+    float startY, endY, YchangeRate;
 };
 
 void HelicopterCinderApp::prepareSettings( Settings *settings ){
@@ -71,6 +74,11 @@ void HelicopterCinderApp::setup()
     upDown = true;
     incrementSize = 5;
     hit = false;
+    olddt = getElapsedSeconds();
+    dt = 0;
+    someVariable = 0;
+    startY = endY = 10;
+    YchangeRate = 100;
 }
 
 void HelicopterCinderApp::mouseDown( MouseEvent event )
@@ -93,22 +101,39 @@ void HelicopterCinderApp::mouseUp( MouseEvent event )
 
 void HelicopterCinderApp::update()
 {
+    float currentTime = getElapsedSeconds();
+    dt = currentTime - olddt;
+    olddt = currentTime;
+    someVariable += 120 *dt;
+
     if(!hit)
     {
-        // call this function every so frames to continue drawing the borders //
-        if (app::getElapsedFrames()%10 == 9)
+        while (someVariable >= Boundary::WIDTH)
         {
-            _BoundaryController.addBoundary(size);
-            if (size == incrementSize * 15)
-                upDown = false;
-            if (size == 0)
-                upDown = true;
-            if(upDown)
-                size+= incrementSize;
-            else
-                size-= incrementSize;
+            _BoundaryController.addBoundary(startY);
+            
+            someVariable -= 20;
+            YchangeRate -=20;
+            if (startY <= endY - 10) {
+                startY += incrementSize;
+            }
+            else if (startY >= endY + 10)
+            {
+                startY -= incrementSize;
+            }
         }
-        hit = _BoundaryController.update(_Helicopter);
+        int changeInSlope=rand()%50;
+        
+        if ( YchangeRate <= 0)
+        {
+            YchangeRate = 320;
+            startY = endY;
+            do {
+            endY = rand()%100;
+            }while (abs(endY-startY)<changeInSlope);
+            
+        }
+        hit = _BoundaryController.update(_Helicopter, dt);
     }
     if(!hit)
     {
@@ -117,11 +142,11 @@ void HelicopterCinderApp::update()
         {
             _obstacle.addPipe(640.0);
         }
-        hit = _obstacle.update(_Helicopter);
+        hit = _obstacle.update(_Helicopter, dt);
 
         // change the position of the helicopter every other frame -- 30 times in a second //
         //if (app::getElapsedFrames()%2 == 1)
-        _Helicopter.updatePosition();
+        _Helicopter.updatePosition(dt);
         
         _scoringEngine.update();
     }

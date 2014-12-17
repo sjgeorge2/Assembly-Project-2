@@ -22,7 +22,7 @@ class BoundaryController
 {
 public:
     BoundaryController();
-    bool update(heliController & heli);
+    bool update(heliController & heli, float dt);
     void draw();
     void addBoundary(float size);
     
