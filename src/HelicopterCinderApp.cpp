@@ -114,10 +114,11 @@ void HelicopterCinderApp::keyDown( KeyEvent event ) {
         width = 20.0;
         speed = 120.0;
         maxBoundaryHeight = 100;
-        _Helicopter.reset();
+        _scoringEngine.reset();
+		_Helicopter.reset();
         _BoundaryController.reset();
         _obstacle.reset();
-        _scoringEngine.reset();
+        
     }
 }
 
@@ -129,9 +130,12 @@ void HelicopterCinderApp::update()
     someVariable += 240 *dt;
     
     if (gameState == 0) {
-        _Helicopter.updatePosition(dt);
+        _scoringEngine.startmessage();
+		_Helicopter.updatePosition(dt);
+		
     } else if (gameState == 1)
     {
+		 
         if(!hit)
         {
             while (someVariable >= Boundary::WIDTH)
@@ -177,19 +181,23 @@ void HelicopterCinderApp::update()
             
             _scoringEngine.update();
         }
-    } else if (gameState == 2)
+     else //if (gameState == 2)
     {
-        
+		
     }
+	}
 }
 
 void HelicopterCinderApp::draw()
 {
+	
     gl::clear();
 	_BoundaryController.draw();
 	_obstacle.draw();
 	_Helicopter.draw();
     _scoringEngine.draw();
+	if(hit)
+	_scoringEngine.gameover();
 }
 
 

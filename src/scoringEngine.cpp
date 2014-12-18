@@ -40,7 +40,14 @@ void Scoringengine::reset()
     _score = 0;
 }
 
+void Scoringengine::gameover()
+{
+	gl::drawStringCentered("Game Over", Vec2f(320,240),ColorA (1,0,0),Font("Ariel", 40));
+	gl::drawStringCentered("Press Enter Start New Game", Vec2f(320,300),ColorA (1,0,0),Font("Ariel", 40));
+}
 
-
-
+void Scoringengine::startmessage()
+{
+	gl::drawStringCentered("Click To Start Game", Vec2f(320,240),ColorA (1,0,0),Font("Ariel", 40));
+}
 	
