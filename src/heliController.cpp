@@ -2,7 +2,7 @@
 
 heliController::heliController()
 {
-	_position.x = 320;
+	_position.x = 160;
 	_position.y = 156;
 	_isFalling = true;
     _velocity = 0.0;
@@ -16,15 +16,18 @@ void heliController::draw()
 	gl::drawSolidRect(_Helicopter);
 }
 
+/*Called every tume a mouse event happens
+  reverses the y-accleration 
+*/
 void heliController::changeDirection()
 {
 	if (!_isFalling)
 	{
-		_acceleration = -700.0;
+		_acceleration = -700.0; // Screen coordinates start at top left corner, so this makes the helicopter fall down 
 	}
 	else
 	{
-		_acceleration = 800;
+		_acceleration = 800; //Helicopter goes up 
 	}
 }
 
@@ -32,26 +35,21 @@ void heliController::changeDirection()
 // currently _velocity is a placeholder variable for when we want a dynamic speed to immitate momentum //
 void heliController::updatePosition(float dt)
 {
-    _velocity += _acceleration * dt;
-	if (!_isFalling)	// move up 2 pixels with every frame while mouse is pressed, 60 frames; 120px/s//
+    _velocity += _acceleration * dt; // Newtons laws of motion(v = vo*t)
+	if (!_isFalling)	
 	{
-		_position.y = _position.y + _velocity * dt;
+		_position.y = _position.y + _velocity * dt; //  move up (velocity*dt) pixels  every frame
 	}
-	else               // move down 2 pixels with every frame while mouse is not pressed, 60 frames //
+	else               
 	{
-		_position.y = _position.y + _velocity * dt;
+		_position.y = _position.y + _velocity * dt; //  move down (velocity*dt) pixels  every frame
 	}
 	
 }
 
-// not sure if adding this, need to figure out how to properly replace draw() images
-int heliController::velocity(heliController & other)
-{
-	// uses old velocity with algorithm here to determine a new velocity //
-	// imitate inertia and momentum //
-	return 1;
-}
-
+/*
+ Reset the game state when player requests a new game 
+*/
 void heliController::reset()
 {
     _position.x = 320;
@@ -63,22 +61,22 @@ void heliController::reset()
 
 float heliController::getLeftX()
 {
-	return _position.x;
+	return _position.x; // Return the top left x-coordinate 
 }
 
 float heliController::getRightX()
 {
-	return _position.x + 50;
+	return _position.x + 50; // Return the bottom right x-coordinate
 }
 
 float heliController::getTopY()
 {
-	return _position.y;
+	return _position.y; // Return the top left y-coordinate
 }
 
 float heliController::getBottomY()
 {
-	return _position.y + 50;
+	return _position.y + 50; // Return the bottom right x-coordinate
 }
 
 void heliController::setisfalling(bool isfalling)

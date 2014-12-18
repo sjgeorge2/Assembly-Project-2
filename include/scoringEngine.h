@@ -19,7 +19,7 @@ class Scoringengine
 	static int _score;
     static int _highScore;
 	std::string _display;
-	std::string _displayBinary;// Display the string in Binary
+	std::string _displayBinary; // Display the string in Binary
     std::string _displayHighScore;
 	std::string _gameOver; 
 	
@@ -31,7 +31,6 @@ public:
 	void draw();
     void reset();
 	void gameover();
-	void startmessage();
 };
 
 #endif 

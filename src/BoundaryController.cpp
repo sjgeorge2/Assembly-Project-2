@@ -37,9 +37,7 @@ bool BoundaryController::update(heliController & heli, float dt, float speed)
 
         if(p->_location.x <= -(p->WIDTH))
         {
-           p = _lowerBoundary.erase(p); //std::out_of_bounds on windows
-         if (!((p != _upperBoundary.end()) && (next(p) == _upperBoundary.end())))
-		   p--;
+           p = _lowerBoundary.erase(p); 
         }
         if ( p != _lowerBoundary.end())
         {
@@ -57,9 +55,7 @@ bool BoundaryController::update(heliController & heli, float dt, float speed)
         }
         if(q->_location.x <= -(q->WIDTH))
         {
-           q = _upperBoundary.erase(q); //std::out_of_bounds on windows
-		   if (!((q != _upperBoundary.end()) && (next(q) == _upperBoundary.end())))
-            q--;
+           q = _upperBoundary.erase(q); 
         }
         if(q != _upperBoundary.end())
         {

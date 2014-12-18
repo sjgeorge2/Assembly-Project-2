@@ -27,7 +27,6 @@ public:
 	void updatePosition(float dt);
 	void draw();
 	void changeDirection();
-	int velocity( heliController & other);
 	float getRightX();
 	float getLeftX();
 	float getTopY();

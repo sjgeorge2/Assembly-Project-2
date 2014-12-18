@@ -130,7 +130,6 @@ void HelicopterCinderApp::update()
     someVariable += 240 *dt;
     
     if (gameState == 0) {
-        _scoringEngine.startmessage();
 		_Helicopter.updatePosition(dt);
 		
     } else if (gameState == 1)
