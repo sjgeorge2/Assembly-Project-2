@@ -15,8 +15,8 @@
 // creates a boundary of given size, with a bool to indicate if it is upper or lower boundary
 // Pre: size >= 0.0
 // Post: _lowerUpper = lowerUpper;
-//       _width = WIDTH;
-//       _height = size;
+//       _width = width;
+//       _height = height;
 //       _location is bottom right for lower and top right for upper boundaries
 Boundary::Boundary(float height,float width, bool lowerUpper)
 {
@@ -36,9 +36,8 @@ Boundary::Boundary(float height,float width, bool lowerUpper)
 }
 
 // update member function
-// every frame, the location of the block moves to the left by the width/10
 // Pre: None
-// Post: _location.x -= (int)(WIDTH/10.0)
+// Post: _location.x -= speed * dt
 void Boundary::update(float dt, float speed)
 {
     _location.x -= speed * dt;
@@ -50,12 +49,13 @@ void Boundary::update(float dt, float speed)
 // Post: rectangle is drawn to screen for either upper or lower border
 void Boundary::draw()
 {
-    if (_lowerUpper) {
+    if (_lowerUpper) //lower
+    {
         ci::Rectf rect(getLeftX(), getTopY(), getRightX()+10, getBottomY());
         ci::gl::color(0.0, 1.0, 0.0); //green
         ci::gl::drawSolidRect(rect);
     }
-    else
+    else //upper
     {
         ci::Rectf rect(getLeftX(), getTopY(), getRightX()+10, getBottomY());
         ci::gl::color(0.0, 1.0, 0.0); //green

@@ -52,7 +52,7 @@ void heliController::updatePosition(float dt)
 */
 void heliController::reset()
 {
-    _position.x = 320;
+    _position.x = 160;
     _position.y = 156;
     _isFalling = true;
     _velocity = 0.0;

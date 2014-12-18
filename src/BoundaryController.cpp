@@ -28,6 +28,7 @@ bool BoundaryController::update(heliController & heli, float dt, float speed)
     // for all in lowerBoundary, update
     for( std::list<Boundary>::iterator p = _lowerBoundary.begin(); p != _lowerBoundary.end(); ++p)
     {
+        //collision detection for lower boundary
         if( (heli.getBottomY() > p->getTopY()) &&
            (((heli.getLeftX() > p->getLeftX()) && (heli.getLeftX() < p->getRightX())) ||
             ((heli.getRightX() > p->getLeftX()) && (heli.getRightX() < p->getRightX()))))
@@ -35,11 +36,11 @@ bool BoundaryController::update(heliController & heli, float dt, float speed)
             hit = true;
         }
 
-        if(p->_location.x <= -(p->WIDTH))
+        if(p->_location.x <= -(p->WIDTH)) //if boundary is off screen
         {
-           p = _lowerBoundary.erase(p); 
+            p = _lowerBoundary.erase(p);
         }
-        if ( p != _lowerBoundary.end())
+        if (p != _lowerBoundary.end())
         {
             p->update(dt, speed);
         }
@@ -47,15 +48,16 @@ bool BoundaryController::update(heliController & heli, float dt, float speed)
     // for all in upperBoundary, update
     for( std::list<Boundary>::iterator q = _upperBoundary.begin(); q != _upperBoundary.end(); ++q)
     {
+        //collision detection for upper boundary
         if( (heli.getTopY() < q->getBottomY()) &&
            (((heli.getLeftX() > q->getLeftX()) && (heli.getLeftX() < q->getRightX())) ||
             ((heli.getRightX() > q->getLeftX()) && (heli.getRightX() < q->getRightX()))))
         {
             hit = true;
         }
-        if(q->_location.x <= -(q->WIDTH))
+        if(q->_location.x <= -(q->WIDTH)) //if boundary is off screen
         {
-           q = _upperBoundary.erase(q); 
+            q = _upperBoundary.erase(q);
         }
         if(q != _upperBoundary.end())
         {
@@ -99,6 +101,8 @@ void BoundaryController::addBoundary(float height, float width, int maxBoundaryH
     _lowerBoundary.push_back(lower); //true for lower boundary constructor
     _upperBoundary.push_back(upper);// false for upper boundary constructor
 }
+
+//when game resets, clear all boundary blocks
 void BoundaryController::reset()
 {
     _lowerBoundary.clear();

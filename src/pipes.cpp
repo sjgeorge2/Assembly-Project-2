@@ -25,7 +25,7 @@ float Pipes::_HEIGHT =100; // Set fixed Height for the obstacles
 
 Pipes::Pipes(float leftX)
 {
-    float randNum=rand()%480;
+    float randNum=rand()%380;
     
 	_position.x = leftX; // top left x-coordinate is passed by pipeController's addPipe
     _position.y = randNum;

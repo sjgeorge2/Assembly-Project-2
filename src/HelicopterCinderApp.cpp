@@ -10,9 +10,11 @@
 */
 
 /* 
-	This is our version of the classic "Helicopter" game with some inline assembly
-
-
+	This is our version of the classic "Helicopter" game
+ 
+    Controls
+    Spacebar/Mouse button/Up Arrow - press to go up, let go to go down
+    Return - Reset Game
 */
 
 
@@ -35,20 +37,20 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class HelicopterCinderApp : public AppNative {
-
-	
+class HelicopterCinderApp : public AppNative
+{
 	Pipecontroller  _obstacle;
 	BoundaryController _BoundaryController;
 	heliController _Helicopter;
     Scoringengine _scoringEngine;
 
-  public:
+public:
     void prepareSettings(Settings *settings);
 	void setup();
 	void mouseDown( MouseEvent event );
     void mouseUp( MouseEvent event );
     void keyDown( KeyEvent event);
+    void keyUp( KeyEvent event);
 	void update();
 	void draw();
 	void drawpipe();
@@ -66,7 +68,8 @@ class HelicopterCinderApp : public AppNative {
     int maxBoundaryHeight;
 };
 
-void HelicopterCinderApp::prepareSettings( Settings *settings ){
+void HelicopterCinderApp::prepareSettings( Settings *settings )
+{
     settings->setWindowSize( 640, 480 );
     settings->setFrameRate( 60.0f );
 }
@@ -102,11 +105,17 @@ void HelicopterCinderApp::mouseDown( MouseEvent event )
 
 void HelicopterCinderApp::mouseUp( MouseEvent event )
 {
-    _Helicopter.setisfalling(true);
-    _Helicopter.changeDirection();
+    if (gameState == 1)
+    {
+        _Helicopter.setisfalling(true);
+        _Helicopter.changeDirection();
+    }
+    
 }
 
-void HelicopterCinderApp::keyDown( KeyEvent event ) {
+void HelicopterCinderApp::keyDown( KeyEvent event )
+{
+    //Return Key reset game
     if( event.getCode() == KeyEvent::KEY_RETURN)
     {
         gameState = 0;
@@ -120,23 +129,44 @@ void HelicopterCinderApp::keyDown( KeyEvent event ) {
         _obstacle.reset();
         
     }
+    //Space bar/Up arrow - Helicopter goes up
+    if (event.getCode() == KeyEvent::KEY_SPACE || event.getCode() == KeyEvent::KEY_UP)
+    {
+        gameState = 1;
+        _Helicopter.setisfalling(false);
+        _Helicopter.changeDirection();
+    }
+}
+//When Spacebar is not pressed, helicopter goes down
+void HelicopterCinderApp::keyUp( KeyEvent event ) {
+    if (gameState == 1)
+    {
+        _Helicopter.setisfalling(true);
+        _Helicopter.changeDirection();
+    }
 }
 
 void HelicopterCinderApp::update()
 {
+    //to calculate dt
     float currentTime = getElapsedSeconds();
     dt = currentTime - olddt;
     olddt = currentTime;
     someVariable += 240 *dt;
     
+    // beginning state - before click
     if (gameState == 0) {
 		_Helicopter.updatePosition(dt);
-		
-    } else if (gameState == 1)
+    }
+    // Level running state
+    else if (gameState == 1)
     {
-		 
+        //if not collided
+
         if(!hit)
         {
+            // The following code is to make the boundaries more random
+            // with help from Mike Moss
             while (someVariable >= Boundary::WIDTH)
             {
                 _BoundaryController.addBoundary(startY, width, maxBoundaryHeight);
@@ -151,8 +181,8 @@ void HelicopterCinderApp::update()
                     startY -= incrementSize;
                 }
             }
-            int changeInSlope=rand()% (maxBoundaryHeight/2);
             
+            int changeInSlope=rand()% (maxBoundaryHeight/2); //creates
             if ( YchangeRate <= 0)
             {
                 YchangeRate = 320;
@@ -161,11 +191,12 @@ void HelicopterCinderApp::update()
                 width += 0.5;
                 do {
                 endY = rand()% maxBoundaryHeight;
-                }while (abs(endY-startY)<changeInSlope);
+                }while (abs(endY-startY)<changeInSlope); //
                 
             }
             hit = _BoundaryController.update(_Helicopter, dt, speed);
         }
+        // if not collided
         if(!hit)
         {
             // call this function every so frames to check if it's time to create another obstacle //
@@ -180,17 +211,12 @@ void HelicopterCinderApp::update()
             
             _scoringEngine.update();
         }
-     else //if (gameState == 2)
-    {
-		
-    }
 	}
 }
 
 void HelicopterCinderApp::draw()
 {
-	
-    gl::clear();
+    gl::clear(); //clear screen
 	_BoundaryController.draw();
 	_obstacle.draw();
 	_Helicopter.draw();
